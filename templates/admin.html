@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>管理 - Minecraft検定</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header style="display:flex;justify-content:space-between;align-items:center">
+      <h1>管理パネル</h1>
+      <div><a href="/exam" class="ghost-btn">検定へ戻る</a> <a href="/logout" class="ghost-btn">ログアウト</a></div>
+    </header>
+
+    <section class="card" style="margin-top:18px">
+      <h2>ランキング（best_level 昇順）</h2>
+      <ol>
+        {% for row in ranking %}
+          <li>{{ row.username }} — {{ row.best_level }}級</li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="card" style="margin-top:18px">
+      <h2>最近の履歴</h2>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr><th>日時</th><th>ユーザー</th><th>元の級</th><th>結果の級</th><th>スコア</th><th>合否</th></tr></thead>
+        <tbody>
+        {% for h in history %}
+          <tr>
+            <td style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.04)">{{ h.created_at }}</td>
+            <td style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.04)">{{ h.username }}</td>
+            <td style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.04)">{{ h.level_before }}級</td>
+            <td style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.04)">{{ h.level_after }}級</td>
+            <td style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.04)">{{ h.score }}/{{ h.total }}</td>
+            <td style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.04)">{{ '合格' if h.passed else '不合格' }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>
